@@ -31,16 +31,16 @@ const XModal = () => {
     }
 
     // Enhanced email validation
-    // if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    //   alert("Invalid email. Please check your email address.");
-    //   return;
-    // }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      alert("Invalid email. Please check your email address.");
+      return;
+    }
 
     // Consistent username validation
-    // if (/\d/.test(formData.username)) {
-    //   alert("Invalid username. Please check your username.");
-    //   return;
-    // }
+    if (/\d/.test(formData.username)) {
+      alert("Invalid username. Please check your username.");
+      return;
+    }
 
     if (!/^\d{10}$/.test(formData.phone)) {
       alert("Invalid phone number. Please enter a 10-digit phone number.");
@@ -51,7 +51,7 @@ const XModal = () => {
     const selectedDate = new Date(formData.dob);
 
     if (selectedDate > currentDate) {
-      alert("Invalid date of birth. Date of birth cannot be in the future");
+      alert("Invalid date of birth. Please enter a valid date.");
       return;
     }
 
@@ -70,9 +70,34 @@ const XModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // Validate the form
+    const form = e.target;
+    if (form.checkValidity()) {
+      // Your existing form submission logic
+      handleSubmit();
+
+      // Reset form data
+      setFormData({
+        username: "",
+        email: "",
+        phone: "",
+        dob: "",
+      });
+
+      // Close the modal
+      setIsModalOpen(false);
+    } else {
+      // If the form is invalid, trigger validation messages for all fields
+      form.reportValidity();
+    }
   };
 
   return (
@@ -84,8 +109,8 @@ const XModal = () => {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h1>Fill Details</h1>
-            <form>
-              <label htmlFor="username">
+            <form onSubmit={handleFormSubmit}>
+              <label htmlFor="username" required>
                 Username:
               </label>
               <br />
@@ -93,7 +118,8 @@ const XModal = () => {
                 type="text"
                 id="username"
                 value={formData.username}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                onBlur={(e) => e.target.reportValidity()}
                 required
               />
               <br />
@@ -106,10 +132,11 @@ const XModal = () => {
                 type="text"
                 id="email"
                 value={formData.email}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                onBlur={(e) => e.target.reportValidity()}
                 max={new Date().toISOString().split("T")[0]}
-                required/>
-              
+                required
+              />
               <br />
 
               <label htmlFor="phone" aria-required="true">
@@ -120,11 +147,13 @@ const XModal = () => {
                 type="text"
                 id="phone"
                 value={formData.phone}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                onBlur={(e) => e.target.reportValidity()}
                 required
               />
               <br />
-              <label htmlFor="dob" >
+
+              <label htmlFor="dob" required>
                 Date of Birth:
               </label>
               <br />
@@ -132,16 +161,13 @@ const XModal = () => {
                 type="date"
                 id="dob"
                 value={formData.dob}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                onBlur={(e) => e.target.reportValidity()}
                 required
               />
               <br />
 
-              <button
-                type="submit"
-                className="submit-button"
-                onClick={handleSubmit}
-              >
+              <button type="submit" className="submit-button">
                 Submit
               </button>
               <br />
