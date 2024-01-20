@@ -30,9 +30,8 @@ const XModal = () => {
       return;
     }
 
-    // Enhanced email validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      alert("Invalid email. Please check your email address.");
+      alert("Invalid email. Please include '@' in your email address.");
       return;
     }
 
@@ -80,17 +79,16 @@ const XModal = () => {
 
     // Validate the form
     const form = e.target;
-    if (form.checkValidity()) {
+
+    // Check if email contains '@'
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+
+    if (form.checkValidity() && isEmailValid) {
       // Your existing form submission logic
       handleSubmit();
 
-      // Reset form data
-      setFormData({
-        username: "",
-        email: "",
-        phone: "",
-        dob: "",
-      });
+      // Reset the form
+      form.reset();
 
       // Close the modal
       setIsModalOpen(false);
@@ -119,7 +117,6 @@ const XModal = () => {
                 id="username"
                 value={formData.username}
                 onChange={handleInputChange}
-                onBlur={(e) => e.target.reportValidity()}
                 required
               />
               <br />
@@ -133,13 +130,22 @@ const XModal = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                onBlur={(e) => e.target.reportValidity()}
-                max={new Date().toISOString().split("T")[0]}
+                onBlur={() => {
+                  const emailInput = document.getElementById("email");
+                  const enteredEmail = emailInput.value;
+                  if (emailInput && !emailInput.value.includes("@")) {
+                    emailInput.setCustomValidity(
+                      `Please include  an '@' in the email address.'${enteredEmail}'is missing an '@'`
+                    );
+                  } else {
+                    emailInput.setCustomValidity("");
+                  }
+                }}
                 required
               />
               <br />
 
-              <label htmlFor="phone" aria-required="true">
+              <label htmlFor="phone" required>
                 Phone:
               </label>
               <br />
@@ -148,7 +154,6 @@ const XModal = () => {
                 id="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                onBlur={(e) => e.target.reportValidity()}
                 required
               />
               <br />
@@ -162,7 +167,6 @@ const XModal = () => {
                 id="dob"
                 value={formData.dob}
                 onChange={handleInputChange}
-                onBlur={(e) => e.target.reportValidity()}
                 required
               />
               <br />
