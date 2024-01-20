@@ -66,8 +66,8 @@ const XModal = () => {
       <button onClick={handleOpenModal}>Open Form</button>
 
       {isModalOpen && (
-        <div className="modal-content" onClick={handleCloseModal}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h1>Fill Details</h1>
             <form onSubmit={handleFormSubmit}>
               <label htmlFor="username" required>

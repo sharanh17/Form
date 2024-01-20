@@ -1,4 +1,15 @@
 .modal-content {
+  
+  width: 35%;
+  height: 35%;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+ 
   position: fixed;
   top: 0;
   left: 0;
@@ -8,13 +19,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.modal {
-  width: 35%;
-  height: 35%;
-  background: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
