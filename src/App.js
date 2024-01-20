@@ -66,7 +66,7 @@ const XModal = () => {
       <button onClick={handleOpenModal}>Open Form</button>
 
       {isModalOpen && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
+        <div className="modal-content" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h1>Fill Details</h1>
             <form onSubmit={handleFormSubmit}>
@@ -94,7 +94,6 @@ const XModal = () => {
                 value={formData.email}
                 onChange={handleChange}
                 onBlur={(e) => e.target.reportValidity()}
-              
                 required
               />
               <br />
