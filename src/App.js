@@ -85,7 +85,7 @@ const XModal = () => {
               <br />
 
               <label htmlFor="email" aria-required="true">
-                Email:
+                Email Address:
               </label>
               <br />
               <input
@@ -94,13 +94,13 @@ const XModal = () => {
                 value={formData.email}
                 onChange={handleChange}
                 onBlur={(e) => e.target.reportValidity()}
-                placeholder="Enter your email..."
+              
                 required
               />
               <br />
 
               <label htmlFor="phone" aria-required="true">
-                Phone:
+                Phone Number:
               </label>
               <br />
               <input
