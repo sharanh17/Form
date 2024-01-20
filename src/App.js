@@ -34,7 +34,7 @@ const XModal = () => {
   };
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form submission here
 
     // Custom validation for '@' symbol in email
     if (!formData.email.includes("@")) {
@@ -52,7 +52,6 @@ const XModal = () => {
       return;
     }
   
-
     // Your existing form submission logic
     handleSubmit();
 
@@ -77,7 +76,7 @@ const XModal = () => {
         <div className="modal" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h1>Fill Details</h1>
-            <form onSubmit={handleFormSubmit}>
+            <div>
               <label htmlFor="username" required>
                 Username:
               </label>
@@ -134,11 +133,11 @@ const XModal = () => {
               />
               <br />
 
-              <button type="submit" className="submit-button">
+              <button type="button" className="submit-button" onClick={handleFormSubmit}>
                 Submit
               </button>
               <br />
-            </form>
+            </div>
           </div>
         </div>
       )}
@@ -147,3 +146,4 @@ const XModal = () => {
 };
 
 export default XModal;
+
