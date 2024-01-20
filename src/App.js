@@ -45,6 +45,14 @@ const XModal = () => {
       return;
     }
 
+    if (!/^\d{10}$/.test(formData.phone)) {
+      const phoneInput = document.getElementById("phone");
+      phoneInput.setCustomValidity("Invalid phone number. Please enter a 10-digit phone number.");
+      phoneInput.reportValidity(); 
+      return;
+    }
+  
+
     // Your existing form submission logic
     handleSubmit();
 
