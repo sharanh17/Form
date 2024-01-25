@@ -36,11 +36,24 @@ const XModal = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault(); // Prevent form submission here
 
+    // Custom validation for date of birth
+    const today = new Date();
+    const selectedDate = new Date(formData.dob);
+
+    today.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+    selectedDate.setHours(0, 0, 0, 0);
+
+    if (selectedDate.getTime() >= today.getTime()) {
+      alert("Invalid date of birth");
+      return;
+    }
+  
+
     // Custom validation for '@' symbol in email
     if (!formData.email.includes("@")) {
       const emailInput = document.getElementById("email");
       const enteredEmail = emailInput.value;
-      emailInput.setCustomValidity(`Please include an '@' in the email address. ' ${enteredEmail} ' is missing an '@'.`);
+      emailInput.setCustomValidity(`Please include an '@' in the email address. '${enteredEmail}' is missing an '@'.`);
       emailInput.reportValidity(); // Trigger validation message
       return;
     }
@@ -48,10 +61,10 @@ const XModal = () => {
     if (!/^\d{10}$/.test(formData.phone)) {
       const phoneInput = document.getElementById("phone");
       phoneInput.setCustomValidity("Invalid phone number. Please enter a 10-digit phone number.");
-      phoneInput.reportValidity(); 
+      phoneInput.reportValidity();
       return;
     }
-  
+
     // Your existing form submission logic
     handleSubmit();
 
@@ -75,69 +88,71 @@ const XModal = () => {
       {isModalOpen && (
         <div className="modal" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h1>Fill Details</h1>
-            <div>
-              <label htmlFor="username" required>
-                Username:
-              </label>
-              <br />
-              <input
-                type="text"
-                id="username"
-                value={formData.username}
-                onChange={handleChange}
-                onBlur={(e) => e.target.reportValidity()}
-                required
-              />
-              <br />
+            <form onSubmit={handleFormSubmit}>
+              <h1>Fill Details</h1>
+              <div>
+                <label htmlFor="username" required>
+                  Username:
+                </label>
+                <br />
+                <input
+                  type="text"
+                  id="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  onBlur={(e) => e.target.reportValidity()}
+                  required
+                />
+                <br />
 
-              <label htmlFor="email" aria-required="true">
-                Email Address:
-              </label>
-              <br />
-              <input
-                type="text"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                onBlur={(e) => e.target.reportValidity()}
-                required
-              />
-              <br />
+                <label htmlFor="email" aria-required="true">
+                  Email Address:
+                </label>
+                <br />
+                <input
+                  type="text"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={(e) => e.target.reportValidity()}
+                  required
+                />
+                <br />
 
-              <label htmlFor="phone" aria-required="true">
-                Phone Number:
-              </label>
-              <br />
-              <input
-                type="text"
-                id="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                onBlur={(e) => e.target.reportValidity()}
-                required
-              />
-              <br />
+                <label htmlFor="phone" aria-required="true">
+                  Phone Number:
+                </label>
+                <br />
+                <input
+                  type="text"
+                  id="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  onBlur={(e) => e.target.reportValidity()}
+                  required
+                />
+                <br />
 
-              <label htmlFor="dob" required>
-                Date of Birth:
-              </label>
-              <br />
-              <input
-                type="date"
-                id="dob"
-                value={formData.dob}
-                onChange={handleChange}
-                onBlur={(e) => e.target.reportValidity()}
-                required
-              />
-              <br />
+                <label htmlFor="dob" required>
+                  Date of Birth:
+                </label>
+                <br />
+                <input
+                  type="date"
+                  id="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  onBlur={(e) => e.target.reportValidity()}
+                  required
+                />
+                <br />
 
-              <button type="button" className="submit-button" onClick={handleFormSubmit}>
-                Submit
-              </button>
-              <br />
-            </div>
+                <button type="submit" className="submit-button">
+                  Submit
+                </button>
+                <br />
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -146,4 +161,3 @@ const XModal = () => {
 };
 
 export default XModal;
-
